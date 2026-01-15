@@ -4,47 +4,34 @@ CLASS zcl_10_airplane DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    METHODS get_id                   RETURNING VALUE(id)        TYPE string.
-    METHODS set_id                   IMPORTING i_id                   TYPE string.
-    METHODS get_plane_type           RETURNING VALUE(plane_type)        TYPE string.
-    METHODS set_plane_type           IMPORTING i_plane_type           TYPE string.
-    METHODS get_empty_weight_in_tons RETURNING VALUE(empty_weight_in_tones)        TYPE i.
-    METHODS set_empty_weight_in_tons IMPORTING i_empty_weight_in_tons TYPE i.
+    METHODS constructor IMPORTING id                   TYPE string
+                                  plane_type           TYPE string
+                                  empty_weight_in_tons TYPE i RAISING zcx_abap_initial_parameter.
+
+    DATA id                   TYPE string READ-ONLY.
+    DATA plane_type           TYPE string READ-ONLY.
+    DATA empty_weight_in_tons TYPE i      READ-ONLY.
+
+    CLASS-DATA numbers_of_airplanes type i READ-ONLY.
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 
-  DATA id type string.
-  data plane_type type string.
-  data empty_weight_in_tons type i.
-
 ENDCLASS.
 
-
-
 CLASS zcl_10_airplane IMPLEMENTATION.
-  METHOD get_id.
-    id = me->id.
-  ENDMETHOD.
 
-  METHOD set_id.
-    me->id = i_id.
-  ENDMETHOD.
+  METHOD constructor.
 
-  METHOD get_plane_type.
-    plane_type = me->plane_type.
-  ENDMETHOD.
+    if id is INITIAL or plane_type is INITIAL or empty_weight_in_tons is INITIAL.
+      raise EXCEPTION new zcx_abap_initial_parameter( parameter = |:)| ).
+    endif.
 
-  METHOD set_plane_type.
-    me->plane_type = i_plane_type.
-  ENDMETHOD.
-
-  METHOD get_empty_weight_in_tons.
-    empty_weight_in_tones = empty_weight_in_tons.
-  ENDMETHOD.
-
-  METHOD set_empty_weight_in_tons.
-    me->empty_weight_in_tons = i_empty_weight_in_tons.
+    me->id = id.
+    me->plane_type = plane_type.
+    me->empty_weight_in_tons = empty_weight_in_tons.
+    numbers_of_airplanes += 1.
   ENDMETHOD.
 
 ENDCLASS.

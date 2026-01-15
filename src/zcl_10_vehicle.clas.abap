@@ -4,57 +4,46 @@ CLASS zcl_10_vehicle DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    METHODS set_make         IMPORTING make                TYPE string.
-    METHODS get_make         RETURNING VALUE(make)         TYPE string.
-    METHODS get_speed_in_kmh RETURNING VALUE(speed_in_kmh) TYPE i.
-    METHODS set_speed_in_kmh IMPORTING speed_in_kmh        TYPE i.
-    METHODS get_model        RETURNING VALUE(model)        TYPE string.
-    METHODS set_model        IMPORTING model               TYPE string.
-    METHODS accelerate       IMPORTING value               TYPE i.
-    METHODS break            IMPORTING value               TYPE i.
+    METHODS constructor IMPORTING make  TYPE string
+                                  model TYPE string.
+    METHODS accelerate       IMPORTING !value              TYPE i RAISING zcx_10_value_too_high.
+    METHODS break            IMPORTING !value              TYPE i RAISING zcx_10_value_too_high.
+
+
+    DATA make         TYPE string READ-ONLY.
+    DATA model        TYPE string READ-ONLY.
+    DATA speed_in_kmh TYPE i      READ-ONLY.
+
+    CLASS-DATA number_of_vehicles TYPE i READ-ONLY.
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-
-    DATA make TYPE string.
-    DATA model TYPE string.
-    DATA speed_in_kmh TYPE i.
 
 ENDCLASS.
 
 
 
 CLASS zcl_10_vehicle IMPLEMENTATION.
-  METHOD get_make.
-    make = me->make.
-  ENDMETHOD.
-
-  METHOD set_make.
-    me->make = make.
-  ENDMETHOD.
-
-  METHOD get_model.
-    model = me->model.
-  ENDMETHOD.
-
-  METHOD set_model.
-    me->model = model.
-  ENDMETHOD.
-
-  METHOD get_speed_in_kmh.
-    speed_in_kmh = me->speed_in_kmh.
-  ENDMETHOD.
-
-  METHOD set_speed_in_kmh.
-    me->speed_in_kmh = speed_in_kmh.
-  ENDMETHOD.
 
   METHOD accelerate.
+    if speed_in_kmh + value > 300.
+      raise EXCEPTION NEW zcx_10_value_too_high( value = value ) .
+    endif.
     speed_in_kmh = speed_in_kmh + value.
   ENDMETHOD.
 
   METHOD break.
-    speed_in_kmh = speed_in_kmh - value.
+    IF value > speed_in_kmh.
+      RAISE EXCEPTION NEW zcx_10_value_too_high( value = value ).
+    ENDIF.
+    speed_in_kmh -= value.
+  ENDMETHOD.
+
+  METHOD constructor.
+    me->make = make.
+    me->model = model.
+    number_of_vehicles += 1.
   ENDMETHOD.
 
 ENDCLASS.
