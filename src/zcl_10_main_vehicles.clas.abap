@@ -17,7 +17,7 @@ CLASS zcl_10_main_vehicles IMPLEMENTATION.
     " Deklarationen
     DATA vehicle  TYPE REF TO zcl_10_vehicle.
     DATA vehicles TYPE TABLE OF REF TO zcl_10_vehicle.
-    DATA truck TYPE REF TO zcl_10_truck.
+    DATA truck    TYPE REF TO zcl_10_truck.
 
     " Instanzierungen
 
@@ -47,9 +47,15 @@ CLASS zcl_10_main_vehicles IMPLEMENTATION.
         CATCH zcx_10_value_too_high INTO DATA(x).
           out->write( x->get_text( ) ).
       ENDTRY.
-      truck = cast #( vehicle ).
-      truck->transform(  ).
-      out->write( vehicle->to_string(  ) ).
+      IF vehicle IS INSTANCE OF zcl_10_truck.
+        truck = CAST #( vehicle ).
+        truck->transform( ).
+        out->write(
+            |{ COND #( WHEN truck->is_transformed = 'X'
+                       THEN 'Der LKW hat sich in einen Autobot transformier       '
+                       ELSE 'Der Autobot hat sich wieder in eine LKW transformiert' ) }| ).
+      ENDIF.
+      out->write( vehicle->to_string( ) ).
     ENDLOOP.
 
     out->write( zcl_10_vehicle=>number_of_vehicles ).
