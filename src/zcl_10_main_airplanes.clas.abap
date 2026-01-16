@@ -19,16 +19,19 @@ CLASS zcl_10_main_airplanes IMPLEMENTATION.
     " Deklarationen
 
     DATA airplane  TYPE REF TO zcl_10_airplane.
-    DATA airplanes TYPE TABLE OF REF TO zcl_10_airplane.
+    DATA carrier TYPE ref to zcl_10_carrier.
+*   DATA airplanes TYPE TABLE OF REF TO zcl_10_airplane.
 
     " Instanzierungen
+
+    carrier = new #( 'Lufthansa' ).
 
     TRY.
         airplane = NEW zcl_10_passenger_plane( id                   = 'D-ABUK'
                                                plane_type           = 'Airbus A380-800'
                                                empty_weight_in_tons = 277
                                                number_of_seats      = 800 ).
-        APPEND airplane TO airplanes.
+        carrier->add_airplane( airplane ).
       CATCH zcx_abap_initial_parameter INTO DATA(x).
         out->write( x->get_text( ) ).
     ENDTRY.
@@ -38,7 +41,7 @@ CLASS zcl_10_main_airplanes IMPLEMENTATION.
                                            plane_type           = 'Boeing 747-400F'
                                            empty_weight_in_tons = 166
                                            cargo_in_tons        = 200 ).
-        APPEND airplane TO airplanes.
+        carrier->add_airplane( airplane ).
       CATCH zcx_abap_initial_parameter INTO x.
         out->write( x->get_text( ) ).
     ENDTRY.
@@ -48,15 +51,17 @@ CLASS zcl_10_main_airplanes IMPLEMENTATION.
                                                plane_type           = 'Airbus A320-200'
                                                empty_weight_in_tons = 42
                                                number_of_seats      = 200 ).
-        APPEND airplane TO airplanes.
+        carrier->add_airplane( airplane ).
       CATCH zcx_abap_initial_parameter INTO x.
         out->write( x->get_text( ) ).
     ENDTRY.
 
     " Ausgabe
-    LOOP AT airplanes INTO airplane.
+    LOOP AT carrier->airplanes INTO airplane.
       out->write(
           |{ airplane->id }, { airplane->plane_type }, { airplane->empty_weight_in_tons }t, { airplane->get_total_weight_in_tons( ) }t| ).
     ENDLOOP.
+
+    out->write( carrier->get_biggest_cargo_plane(  ) ).
   ENDMETHOD.
 ENDCLASS.
