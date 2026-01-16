@@ -1,6 +1,5 @@
 CLASS zcl_10_airplane DEFINITION
   PUBLIC
-  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -12,8 +11,10 @@ CLASS zcl_10_airplane DEFINITION
     DATA plane_type           TYPE string READ-ONLY.
     DATA empty_weight_in_tons TYPE i      READ-ONLY.
 
-    CLASS-DATA numbers_of_airplanes type i READ-ONLY.
+    CLASS-DATA numbers_of_airplanes TYPE i READ-ONLY.
 
+    METHODS get_total_weight_in_tons
+      RETURNING VALUE(result) TYPE i.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -24,14 +25,18 @@ CLASS zcl_10_airplane IMPLEMENTATION.
 
   METHOD constructor.
 
-    if id is INITIAL or plane_type is INITIAL or empty_weight_in_tons is INITIAL.
-      raise EXCEPTION new zcx_abap_initial_parameter( parameter = |:)| ).
-    endif.
+    IF id IS INITIAL OR plane_type IS INITIAL OR empty_weight_in_tons IS INITIAL.
+      RAISE EXCEPTION NEW zcx_abap_initial_parameter( parameter = |:)| ).
+    ENDIF.
 
     me->id = id.
     me->plane_type = plane_type.
     me->empty_weight_in_tons = empty_weight_in_tons.
     numbers_of_airplanes += 1.
+  ENDMETHOD.
+
+  METHOD get_total_weight_in_tons.
+    result = empty_weight_in_tons * '1.1'.
   ENDMETHOD.
 
 ENDCLASS.

@@ -17,21 +17,25 @@ CLASS zcl_10_main_vehicles IMPLEMENTATION.
     " Deklarationen
     DATA vehicle  TYPE REF TO zcl_10_vehicle.
     DATA vehicles TYPE TABLE OF REF TO zcl_10_vehicle.
+    DATA truck TYPE REF TO zcl_10_truck.
 
     " Instanzierungen
 
     out->write( zcl_10_vehicle=>number_of_vehicles ).
 
-    vehicle = NEW #( make  = 'Porsche'
-                     model = '911' ).
+    vehicle = NEW zcl_10_car( make  = 'Porsche'
+                              model = '911'
+                              seats = '2' ).
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make  = 'MAN'
-                     model = 'TGX' ).
+    vehicle = NEW zcl_10_truck( make          = 'MAN'
+                                model         = 'TGX'
+                                cargo_in_tons = 40 ).
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make  = 'Skoda'
-                     model = 'Superb Combi' ).
+    vehicle = NEW zcl_10_car( make  = 'Skoda'
+                              model = 'Superb Combi'
+                              seats = 5 ).
     APPEND vehicle TO vehicles.
 
     " Ausgabe
@@ -43,7 +47,9 @@ CLASS zcl_10_main_vehicles IMPLEMENTATION.
         CATCH zcx_10_value_too_high INTO DATA(x).
           out->write( x->get_text( ) ).
       ENDTRY.
-      out->write( |{ vehicle->make } { vehicle->model }| ).
+      truck = cast #( vehicle ).
+      truck->transform(  ).
+      out->write( vehicle->to_string(  ) ).
     ENDLOOP.
 
     out->write( zcl_10_vehicle=>number_of_vehicles ).

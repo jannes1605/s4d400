@@ -1,14 +1,18 @@
 CLASS zcl_10_vehicle DEFINITION
   PUBLIC
-  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
     METHODS constructor IMPORTING make  TYPE string
                                   model TYPE string.
-    METHODS accelerate       IMPORTING !value              TYPE i RAISING zcx_10_value_too_high.
-    METHODS break            IMPORTING !value              TYPE i RAISING zcx_10_value_too_high.
 
+    METHODS accelerate IMPORTING !value TYPE i
+                       RAISING   zcx_10_value_too_high.
+
+    METHODS break IMPORTING !value TYPE i
+                  RAISING   zcx_10_value_too_high.
+
+    METHODS to_string RETURNING VALUE(string) TYPE string.
 
     DATA make         TYPE string READ-ONLY.
     DATA model        TYPE string READ-ONLY.
@@ -44,6 +48,10 @@ CLASS zcl_10_vehicle IMPLEMENTATION.
     me->make = make.
     me->model = model.
     number_of_vehicles += 1.
+  ENDMETHOD.
+
+  METHOD to_string.
+    string = |{ make } { model } ({ speed_in_kmh }km/h|.
   ENDMETHOD.
 
 ENDCLASS.
