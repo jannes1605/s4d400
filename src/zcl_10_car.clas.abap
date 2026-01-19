@@ -29,7 +29,7 @@ CLASS zcl_10_car IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD to_string.
-    string = |{ make } { model } ({ speed_in_kmh }km/h, { seats } Sitzplaetze)|.
+    string = |{ make } { model } ({ speed_in_kmh }km/h, { seats } Sitzplätze)|.
   ENDMETHOD.
 
 ENDCLASS.

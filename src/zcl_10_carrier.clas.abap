@@ -5,6 +5,8 @@ CLASS zcl_10_carrier DEFINITION
 
   PUBLIC SECTION.
 
+    interfaces zif_10_partner.
+
     DATA name TYPE string READ-ONLY.
     DATA airplanes TYPE z10_airplanes READ-ONLY.
 
@@ -42,6 +44,10 @@ CLASS zcl_10_carrier IMPLEMENTATION.
         max_cargo_in_tons = biggest_cargo_plane->get_total_weight_in_tons( ).
       ENDIF.
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD zif_10_partner~to_string.
+    string = 'Ich bin die Fluggesellschaft'.
   ENDMETHOD.
 
 ENDCLASS.
