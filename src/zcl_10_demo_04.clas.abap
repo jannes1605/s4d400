@@ -1,38 +1,13 @@
-CLASS zcl_10_demo_04 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_10_DEMO_04 definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_10_demo_04 IMPLEMENTATION.
-
-
-  METHOD if_oo_adt_classrun~main.
-
-
-    WHILE sy-index <= 10.
-      out->write( sy-index ).
-    ENDWHILE.
-
-    DO 10 TIMES.
-      out->write( sy-index ).
-    ENDDO.
-
-    DO.
-      out->write( sy-index ).
-      IF sy-index = 10.
-        EXIT.
-      ENDIF.
-    ENDDO.
-
-
-  ENDMETHOD.
+CLASS ZCL_10_DEMO_04 IMPLEMENTATION.
 ENDCLASS.

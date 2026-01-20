@@ -1,26 +1,13 @@
-CLASS zcl_10_demo_05 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_10_DEMO_05 definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_10_demo_05 IMPLEMENTATION.
-  METHOD if_oo_adt_classrun~main.
-
-    TRY.
-        DATA(result) = zcl_10_calculator=>divide( operand1 = 5 operand2 = 3 ).
-        out->write( result ).
-      CATCH cx_sy_zerodivide INTO DATA(x).
-        out->write( x->get_text(  ) ).
-    ENDTRY.
-
-  ENDMETHOD.
+CLASS ZCL_10_DEMO_05 IMPLEMENTATION.
 ENDCLASS.
