@@ -18,3 +18,4 @@ define view entity Z10_Travel as select from /dmo/travel as t
   description as Description,
   status as Status
 }
+
