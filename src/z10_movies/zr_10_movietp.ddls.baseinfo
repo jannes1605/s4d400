@@ -3,10 +3,14 @@
 {
 "FROM":
 [
+"ZI_10_AVERAGERATING",
+"ZI_10_GENRETEXT",
 "ZI_10_MOVIE"
 ],
 "ASSOCIATED":
-[],
+[
+"ZR_10_RATINGTP"
+],
 "BASE":
 [],
 "ANNO_REF":

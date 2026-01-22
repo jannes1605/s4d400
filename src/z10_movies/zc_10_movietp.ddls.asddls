@@ -8,8 +8,12 @@
 
 @Search.searchable: true
 
-define view entity ZC_10_MOVIETP
-  as select from ZR_10_MOVIETP
+@UI.lineItem: [ { criticality: 'AverageRatingCriticality' } ]
+
+@UI.presentationVariant: [ { sortOrder: [ { by: 'AverageRating', direction: #DESC } ] } ]
+
+define root view entity ZC_10_MOVIETP
+  as projection on ZR_10_MOVIETP
 
 {
   key MovieUuid,
@@ -21,12 +25,16 @@ define view entity ZC_10_MOVIETP
       Genre,
       PublishingYear,
       RuntimeInMin,
-
-      @Semantics.imageUrl: true
       ImageUrl,
-
       CreatedAt,
       CreatedBy,
       LastChangedAt,
-      LastChangedBy
+      LastChangedBy,
+      
+      GenreText,
+      
+      AverageRating,
+      AverageRatingCriticality,
+      
+      _Ratings : redirected to composition child ZC_10_RatingTP
 }

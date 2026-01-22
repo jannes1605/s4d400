@@ -2,13 +2,19 @@
 
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 
-@EndUserText.label: 'Travel TP'
+@EndUserText.label: 'Travel'
+
+@Metadata.allowExtensions: true
 
 @Search.searchable: true
 
-@Metadata.allowExtensions: true
-define view entity ZC_10_TravelTP
-  as select from ZR_10_TRAVELTP
+@UI.lineItem: [ { criticality: 'StatusCriticality' } ]
+
+@UI.presentationVariant: [ { sortOrder: [ { by: 'BeginDate', direction: #DESC },
+                                          { by: 'EndDate',   direction: #ASC  } ] } ]
+
+define root view entity ZC_10_TravelTP
+  as projection on ZR_10_TRAVELTP
 
 {
   key TravelId,
@@ -29,5 +35,10 @@ define view entity ZC_10_TravelTP
       CreatedBy,
       CreatedAt,
       LastChangedBy,
-      LastChangedAt
+      LastChangedAt,
+
+      StatusCriticality,
+      CustomerName,
+
+      _Bookings : redirected to composition child ZC_10_BookingTP
 }
