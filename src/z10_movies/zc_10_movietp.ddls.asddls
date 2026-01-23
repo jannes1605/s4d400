@@ -8,12 +8,9 @@
 
 @Search.searchable: true
 
-@UI.lineItem: [ { criticality: 'AverageRatingCriticality' } ]
-
-@UI.presentationVariant: [ { sortOrder: [ { by: 'AverageRating', direction: #DESC } ] } ]
-
-define root view entity ZC_10_MOVIETP
-  as projection on ZR_10_MOVIETP
+define root view entity ZC_10_MovieTP
+  provider contract transactional_query
+  as projection on ZR_10_MovieTP
 
 {
   key MovieUuid,
@@ -22,7 +19,10 @@ define root view entity ZC_10_MOVIETP
       @Search.fuzzinessThreshold: 0.7
       Title,
 
+      @Consumption.valueHelpDefinition: [ { entity: { name: 'ZI_10_GenreVH', element: 'Genre' } } ]
+      @ObjectModel.text.element: [ 'GenreText' ]
       Genre,
+
       PublishingYear,
       RuntimeInMin,
       ImageUrl,
@@ -30,11 +30,12 @@ define root view entity ZC_10_MOVIETP
       CreatedBy,
       LastChangedAt,
       LastChangedBy,
-      
-      GenreText,
-      
-      AverageRating,
-      AverageRatingCriticality,
-      
+
+      /* Transient Data */
+      _AverageRating.AverageRating,
+      _AverageRating.AverageRatingCriticality,
+      _GenreText.GenreText,
+
+      /* Associations */
       _Ratings : redirected to composition child ZC_10_RatingTP
 }

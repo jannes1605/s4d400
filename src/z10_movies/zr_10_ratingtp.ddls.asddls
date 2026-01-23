@@ -1,14 +1,22 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Rating'
-define view entity ZR_10_RatingTP as select from ZI_10_RATING
 
-association to parent ZR_10_MOVIETP as _MOVIE 
-  on $projection.MovieUuid = _MOVIE.MovieUuid
+@EndUserText.label: 'Rating'
+
+@Metadata.ignorePropagatedAnnotations: true
+
+define view entity ZR_10_RatingTP
+  as select from ZI_10_Rating
+
+  association to parent ZR_10_MovieTP as _Movie on $projection.MovieUuid = _Movie.MovieUuid
+
 {
   key RatingUuid,
-  MovieUuid,
-  UserName,
-  Rating,
-  RatingDate,
-  _MOVIE
+
+      MovieUuid,
+      UserName,
+      Rating,
+      RatingDate,
+
+      /* Associations */
+      _Movie
 }

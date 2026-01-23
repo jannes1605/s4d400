@@ -1,15 +1,10 @@
-@AbapCatalog.viewEnhancementCategory: [ #NONE ]
-
+@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-
 @EndUserText.label: 'Movie'
-
 define view entity ZI_10_Movie
   as select from zabap_movie_a
-
 {
   key movie_uuid      as MovieUuid,
-
       title           as Title,
       genre           as Genre,
       publishing_year as PublishingYear,
@@ -17,7 +12,6 @@ define view entity ZI_10_Movie
 
       @Semantics.imageUrl: true
       image_url       as ImageUrl,
-
       created_at      as CreatedAt,
       created_by      as CreatedBy,
       last_changed_at as LastChangedAt,

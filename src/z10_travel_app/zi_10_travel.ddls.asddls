@@ -9,7 +9,6 @@ define view entity ZI_10_Travel
 
 {
   key travel_id     as TravelId,
-
       agency_id     as AgencyId,
       customer_id   as CustomerId,
       begin_date    as BeginDate,
@@ -20,12 +19,19 @@ define view entity ZI_10_Travel
 
       @Semantics.amount.currencyCode: 'CurrencyCode'
       total_price   as TotalPrice,
-
       currency_code as CurrencyCode,
       description   as Description,
       status        as Status,
+
+      @Semantics.user.createdBy: true
       createdby     as CreatedBy,
+
+      @Semantics.systemDateTime.createdAt: true
       createdat     as CreatedAt,
+
+      @Semantics.user.lastChangedBy: true
       lastchangedby as LastChangedBy,
+
+      @Semantics.systemDateTime.lastChangedAt: true
       lastchangedat as LastChangedAt
 }
