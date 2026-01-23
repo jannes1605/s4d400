@@ -10,8 +10,13 @@ annotate entity ZC_10_TravelTP with
                { position: 20, type: #FIELDGROUP_REFERENCE, targetQualifier: 'Admin',   label: 'Administrative Data' },
                { position: 30, type: #LINEITEM_REFERENCE, targetElement: '_Bookings',   label: 'Bookings' } ]
   
+  @UI.identification: [{ position: 10, type: #FOR_ACTION, label: 'Cancel Travel', dataAction: 'CancelTravel' }]
+  
+  
+  @UI.lineItem: [{ position: 10 }, 
+                 { position: 10, type: #FOR_ACTION, label: 'Cancel Travel', dataAction: 'CancelTravel' }]
+  
   @UI.fieldGroup: [ { position: 10, qualifier: 'Details' } ]
-  @UI.lineItem: [ { position: 10 } ]
   TravelId;
 
   @UI.fieldGroup: [ { position: 20, qualifier: 'Details' } ]

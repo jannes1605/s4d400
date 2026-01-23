@@ -15,8 +15,11 @@ authorization master ( instance )
 
   field ( mandatory : create ) Title, Genre, PublishingYear, RuntimeInMin;
   field ( readonly : update ) Title, Genre, PublishingYear, RuntimeInMin;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAT, LastChangedBy;
 
   validation ValidateGenre on save { create; }
+
+  action RateMovie parameter ZA_10_Rating; //result [1] $self;
 
   mapping for zabap_movie_a corresponding
     {
@@ -40,8 +43,11 @@ authorization dependent by _Movie
   update;
   delete;
   field ( readonly, numbering : managed ) RatingUuid;
-  field ( readonly ) MovieUuid;
+  field ( readonly ) MovieUuid, RatingDate, UserName;
   association _Movie;
+
+  determination DeterminRatingDate on save { create; }
+  determination DeterminUserName on save { create; }
 
   mapping for zabap_rating_a corresponding
     {
